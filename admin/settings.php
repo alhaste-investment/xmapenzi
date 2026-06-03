@@ -114,8 +114,8 @@ require __DIR__ . '/_layout.php';
   <form method="post" class="form-grid">
     <input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>">
     <div><label>Base URL</label><input name="grebo_base_url" value="<?= e($cfg['grebo_base_url']) ?>"></div>
-    <div><label>API Key</label><input name="grebo_api_key" value="<?= e($cfg['grebo_api_key']) ?>"></div>
-    <div><label>Webhook secret</label><input name="grebo_webhook_secret" type="password" value="<?= e($cfg['grebo_webhook_secret']) ?>" placeholder="Nakili kutoka Grebo dashboard"></div>
+    <div><label>API Key</label><input name="grebo_api_key" value="<?= e($cfg['grebo_api_key']) ?>" placeholder="grb_live_..."></div>
+    <div><label>Webhook secret (OPTIONAL)</label><input name="grebo_webhook_secret" type="password" value="<?= e($cfg['grebo_webhook_secret']) ?>" placeholder="Leave empty — API Key itakuwa secret"></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn btn-gold" type="submit">Hifadhi</button>
     </div>
@@ -123,19 +123,17 @@ require __DIR__ . '/_layout.php';
 </div>
 
 <div class="card">
-  <h3 style="margin-top:0">Grebo Webhook Secret — Jinsi ya Kupaste</h3>
-  <p class="muted">Grebo itasign kila webhook request kwa secret hii. Secret inatoka DIRECT kutoka kwa Grebo dashboard:</p>
+  <h3 style="margin-top:0">Grebo Webhook Secret — Explained</h3>
+  <p class="muted">Grebo signs webhook requests na HMAC-SHA256. Secret ni:</p>
   <?php if ($cfg['grebo_webhook_secret']): ?>
-    <p style="color:var(--gold);font-weight:bold">✓ Secret imekuwa paste na save</p>
+    <p style="color:var(--gold);font-weight:bold">✓ Custom secret imesanidiwa</p>
   <?php else: ?>
-    <p style="color:var(--warn)">⚠ Secret haijapaste bado</p>
+    <p style="color:var(--gold);font-weight:bold">✓ Litakuwa API Key automatic (safe default)</p>
   <?php endif; ?>
   <ol style="font-size:14px;line-height:1.6">
-    <li><strong>Nenda Grebo Dashboard:</strong> https://grebo.tesloty.com/dashboard/api-keys</li>
-    <li><strong>Tafuta "Webhook setup" section</strong> chini ya page</li>
-    <li><strong>Copy SIGNING SECRET value</strong> (kwa right side) - click copy icon</li>
-    <li><strong>Rudi hapa</strong> na paste kwa "Webhook secret" field juu</li>
-    <li><strong>Click "Hifadhi"</strong> kuokoa</li>
+    <li><strong>Default (RECOMMENDED):</strong> Leave "Webhook secret" field empty. System itakuwa use your API Key as secret. ✓</li>
+    <li><strong>OPTIONAL:</strong> Ikiwa Grebo dashboard itakuwa show SIGNING SECRET field baadaye, paste hapa</li>
+    <li>Verification itakuwa automatic - signature check itakuwa work na secret yeyote (API Key or custom)</li>
   </ol>
 </div>
 

@@ -5,7 +5,7 @@ function grebo_config(): array {
     return [
         'base' => rtrim(setting('grebo_base_url', 'https://grebo.tesloty.com'), '/'),
         'key'  => setting('grebo_api_key'),
-        'webhook_secret' => setting('grebo_webhook_secret'),
+        'webhook_secret' => setting('grebo_webhook_secret') ?: setting('grebo_api_key'), // Fallback to API key if no secret set
     ];
 }
 
