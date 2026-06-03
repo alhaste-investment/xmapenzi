@@ -123,6 +123,23 @@ require __DIR__ . '/_layout.php';
 </div>
 
 <div class="card">
+  <h3 style="margin-top:0">Grebo Webhook Secret — Jinsi ya Kupaste</h3>
+  <p class="muted">Grebo itasign kila webhook request kwa secret hii. Secret inatoka DIRECT kutoka kwa Grebo dashboard:</p>
+  <?php if ($cfg['grebo_webhook_secret']): ?>
+    <p style="color:var(--gold);font-weight:bold">✓ Secret imekuwa paste na save</p>
+  <?php else: ?>
+    <p style="color:var(--warn)">⚠ Secret haijapaste bado</p>
+  <?php endif; ?>
+  <ol style="font-size:14px;line-height:1.6">
+    <li><strong>Nenda Grebo Dashboard:</strong> https://grebo.tesloty.com/dashboard/api-keys</li>
+    <li><strong>Tafuta "Webhook setup" section</strong> chini ya page</li>
+    <li><strong>Copy SIGNING SECRET value</strong> (kwa right side) - click copy icon</li>
+    <li><strong>Rudi hapa</strong> na paste kwa "Webhook secret" field juu</li>
+    <li><strong>Click "Hifadhi"</strong> kuokoa</li>
+  </ol>
+</div>
+
+<div class="card">
   <h3 style="margin-top:0">Webhook URL ya Selcom Portal</h3>
   <p class="muted">Nakili URL hii uweke kwenye Selcom Merchant Portal kama callback URL:</p>
   <code style="display:block;padding:10px;background:var(--surface-2);border-radius:8px;word-break:break-all"><?= e($webhookUrl) ?></code>
@@ -135,23 +152,7 @@ require __DIR__ . '/_layout.php';
 </div>
 
 <div class="card">
-  <h3 style="margin-top:0">Grebo Webhook Secret</h3>
-  <p class="muted">Grebo itasign kila webhook request kwa secret hii. Lazima kuweka kwa hapo na kwa Grebo dashboard kwa kuverify requests:</p>
-  <?php if ($cfg['grebo_webhook_secret']): ?>
-    <p style="color:var(--gold);font-weight:bold">✓ Secret imekuwa paste na save</p>
-  <?php else: ?>
-    <p style="color:var(--warn)">⚠ Secret haijapaste bado - tafadhali copy kutoka Grebo dashboard</p>
-  <?php endif; ?>
-  <ol style="font-size:14px;line-height:1.6">
-    <li>Nenda Grebo dashboard → API Keys → "Webhook setup" section</li>
-    <li>Tafuta "SIGNING SECRET" field kwa right side</li>
-    <li>Click copy icon kukopesha secret</li>
-    <li>Paste hapa kwenye "Webhook secret" field juu</li>
-    <li>Click "Hifadhi" kuokoa</li>
-  </ol>
-</div>
 
-<div class="card">
   <h3 style="margin-top:0">Badili Password</h3>
   <form method="post" class="form-grid" style="max-width:420px">
     <input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>">
