@@ -7,6 +7,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'gen_token') {
         set_setting('selcom_webhook_token', bin2hex(random_bytes(16)));
         $msg = ['ok','Webhook token mpya imetengenezwa.'];
+    } elseif ($action === 'gen_grebo_secret') {
+        set_setting('grebo_webhook_secret', bin2hex(random_bytes(32)));
+        $msg = ['ok','Grebo webhook secret mpya imetengenezwa.'];
     } elseif ($action === 'change_pwd') {
         $cur = $_POST['current'] ?? ''; $new = $_POST['new'] ?? ''; $rep = $_POST['repeat'] ?? '';
         if (strlen($new) < 8) $msg = ['bad','Password mpya iwe na char 8 au zaidi.'];
@@ -118,6 +121,7 @@ require __DIR__ . '/_layout.php';
     <div><label>Webhook secret</label><input name="grebo_webhook_secret" type="password" value="<?= e($cfg['grebo_webhook_secret']) ?>"></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
       <button class="btn btn-gold" type="submit">Hifadhi</button>
+      <button class="btn btn-outline" name="action" value="gen_grebo_secret" type="submit">Tengeneza secret mpya</button>
     </div>
   </form>
 </div>
@@ -132,6 +136,22 @@ require __DIR__ . '/_layout.php';
   <h3 style="margin-top:0">Webhook URL ya Grebo</h3>
   <p class="muted">Set this in the Grebo dashboard as your deposit callback (Grebo signs requests with `x-grebo-signature`).</p>
   <code style="display:block;padding:10px;background:var(--surface-2);border-radius:8px;word-break:break-all"><?= e($greboWebhookUrl) ?></code>
+</div>
+
+<div class="card">
+  <h3 style="margin-top:0">Grebo Webhook Secret</h3>
+  <p class="muted">Grebo itasign kila webhook request kwa secret hii. Lazima kuweka kwa hapo na kwa Grebo dashboard kwa kuverify requests:</p>
+  <?php if ($cfg['grebo_webhook_secret']): ?>
+    <p style="color:var(--gold);font-weight:bold">✓ Secret imesanidiwa</p>
+  <?php else: ?>
+    <p style="color:var(--warn)">⚠ Secret haijasanidiwa bado - click "Tengeneza secret mpya"</p>
+  <?php endif; ?>
+  <ol style="font-size:14px;line-height:1.6">
+    <li>Click "Tengeneza secret mpya" hapo juu kutengeneza strong secret</li>
+    <li>Secret itaonyeshwa kwa form (mwanzo wa input field)</li>
+    <li>Copy secret na uweke kwa Grebo dashboard → Webhooks settings</li>
+    <li>Webhook verification itaandaliwa automatically</li>
+  </ol>
 </div>
 
 <div class="card">
